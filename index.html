@@ -22,6 +22,68 @@
             margin: 0 auto;
             padding: 10px;
             background: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        body.dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode table {
+            border-color: #444;
+        }
+        
+        body.dark-mode th,
+        body.dark-mode td {
+            border-color: #444;
+        }
+        
+        body.dark-mode thead {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode tbody tr:nth-child(even) {
+            background-color: #252525;
+        }
+        
+        body.dark-mode h1 {
+            border-bottom-color: #e0e0e0;
+        }
+        
+        body.dark-mode .stress-label {
+            color: #999;
+        }
+        
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 8pt;
+            font-family: 'IBM Plex Sans', sans-serif;
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+        
+        .dark-mode-toggle:hover {
+            background: #444;
+        }
+        
+        body.dark-mode .dark-mode-toggle {
+            background: #e0e0e0;
+            color: #1a1a1a;
+            border-color: #ccc;
+        }
+        
+        body.dark-mode .dark-mode-toggle:hover {
+            background: #ccc;
         }
         
         h1 {
@@ -128,6 +190,7 @@
     </style>
 </head>
 <body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
     <div class="stress-label">Completed Transaction</div>
     <h1>Sold 196 Rainbow St → Bought 46 Lincoln Ave</h1>
 
@@ -336,6 +399,34 @@
             </tr>
         </tbody>
     </table>
+
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            const button = document.querySelector('.dark-mode-toggle');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                button.textContent = '☀️ Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                button.textContent = '🌙 Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+        
+        // Check for saved dark mode preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkMode = localStorage.getItem('darkMode');
+            const button = document.querySelector('.dark-mode-toggle');
+            
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                button.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
 </body>
 </html>
 
